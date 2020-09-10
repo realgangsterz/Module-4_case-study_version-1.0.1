@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <link rel="stylesheet" href="assets/css/productCss.css">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spring Customer</title>
+
+</head>
+<body>
+
+<h1>Products</h1>
+<form>
+    Search by product name:
+    <input name="s" type="text"/>
+    <input type="submit" value="Search"/>
+</form><br/>
+<a href="/create-product"><input type="submit" value="Create"></a>
+<table id="customers">
+    <tr>
+        <th>Product name</th>
+        <th>Product Price</th>
+        <th>Discount</th>
+        <th>Amount</th>
+        <th>Shopping</th>
+        <th>Product Photo</th>
+        <th>Category</th>
+        <th>Producer</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    <th:block th:each="product : ${products}">
+        <tr>
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.productPrice}"></td>
+            <td th:text="${product.discount}"></td>
+            <td th:text="${product.amount}"></td>
+            <td th:text="${product.shopping}"></td>
+            <td th:text="${product.productPhoto}"></td>
+            <td th:text="${product.category.categoryName}"></td>
+            <td th:text="${product.producer.producerName}"></td>
+            <td><a th:href="@{/edit-product/__${product.productId}__ }">Edit</a></td>
+            <td><a th:href="@{/delete-product/__${product.productId}__ }">Delete</a></td>
+            <td><a th:href="@{/delete-product/__${product.productId}__ }">View</a></td>
+        </tr>
+    </th:block>
+</table>
+<div>
+    <a th:href="@{'/products'(page=${products.number - 1})}" th:if="${products.hasPrevious()}">Previous</a>
+    <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
+    <a th:href="@{'/products'(page=${products.number + 1})}" th:if="${products.hasNext()}">Next</a>
+</div>
+
+</body>
+</html>

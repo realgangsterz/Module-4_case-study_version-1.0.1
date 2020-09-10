@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Product</title>
+    <link rel="stylesheet" href="assets/css/productCss.css">
+</head>
+<body>
+<h1>Create Product</h1>
+<p>
+    <a href="/products">Product List</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+
+<form th:action="@{/create-product}" th:object="${product}" method="post">
+    <table>
+        <tr>
+            <td>Product Name:</td>
+            <td><input type="text" th:field="*{productName}"/></td>
+            <td th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Product Price:</td>
+            <td><input type="text" th:field="*{productPrice}"/></td>
+            <td th:if="${#fields.hasErrors('productPrice')}" th:errors="*{productPrice}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Discount:</td>
+            <td><input type="text" th:field="*{discount}"/></td>
+            <td th:if="${#fields.hasErrors('discount')}" th:errors="*{discount}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Amount:</td>
+            <td><input type="text" th:field="*{amount}"/></td>
+            <td th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Shopping:</td>
+            <td><input type="text" th:field="*{shopping}"/></td>
+            <td th:if="${#fields.hasErrors('shopping')}" th:errors="*{shopping}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Product Photo:</td>
+            <td><input type="file" th:field="*{productPhoto}"/></td>
+            <td th:if="${#fields.hasErrors('productPhoto')}" th:errors="*{productPhoto}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Category:</td>
+            <td>
+                <select th:field="*{category}">
+                    <option th:each="p : ${categorys}"
+                            th:value="${p.categoryId}"
+                            th:text="${p.categoryName}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Producer:</td>
+            <td>
+                <select th:field="*{producer}">
+                    <option th:each="b : ${producers}"
+                            th:value="${b.producerId}"
+                            th:text="${b.producerName}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Create Product"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

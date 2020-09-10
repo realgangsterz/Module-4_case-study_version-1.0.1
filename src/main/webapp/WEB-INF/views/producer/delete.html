@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Producer</title>
+</head>
+<body>
+<h1>Delete Producer</h1>
+<h2>Are you sure?</h2>
+<p>
+    <a href="/producers">Producer List</a>
+</p>
+<form th:action="@{/delete-producer}" th:object="${producer}" method="post">
+    <input th:type="hidden" name="id" th:field="*{producerId}">
+    <table>
+        <tr>
+            <td>Producer Name:</td>
+            <td th:text="${producer.producerName}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Delete Producer"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
