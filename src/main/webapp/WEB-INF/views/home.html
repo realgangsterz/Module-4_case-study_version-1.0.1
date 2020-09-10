@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-<html class="no-js" lang="zxx">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html class="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -8,9 +8,8 @@
     <title>Fashion | Teamplate</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
     <!-- CSS here -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
@@ -44,13 +43,21 @@
                         <div class="main-menu  d-none d-lg-block">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="home.html">Home</a></li>
-                                    <li><a href="shop.html">shop</a></li>
-                                    <li><a href="about.html">About</a></li>
-                                    <li><a href="blog.html">Blog</a>
+                                    <li><a th:href="@{'/'}">Home</a></li>
+                                    <li><a th:href="@{'/'}">shop</a>
                                         <ul class="submenu">
-                                            <li><a href="blog.html">Blog</a></li>
-                                            <li><a href="blog_details.html">Blog Details</a></li>
+                                            <th:block th:each="categorie : ${categories}">
+                                                <li>
+                                                    <a th:href="@{/category/__${categorie.categoryId}__}"
+                                                       th:text="${categorie.categoryName}"></a></li>
+                                            </th:block>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/about">About</a></li>
+                                    <li><a href="blog">Blog</a>
+                                        <ul class="submenu">
+                                            <li><a href="/blog">Blog</a></li>
+                                            <li><a href="/blog/details">Blog Details</a></li>
                                             <li><a href="elements.html">Elements</a></li>
                                             <li><a href="product_details.html">Product Details</a></li>
                                         </ul>
@@ -96,101 +103,152 @@
 </header>
 <!-- header end -->
 <main>
-    <!-- breadcrumb Start-->
-    <div class="page-notification">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a th:href="@{'/'}">Home</a></li>
-                            <li class="breadcrumb-item"><a th:href="@{/category/__${productDetail.category.categoryId}__}">shop</a></li>
-                            <li class="breadcrumb-item"><a href="#">Product Details</a></li>
-                        </ol>
-                    </nav>
+    <!--? Hero Area Start-->
+    <div class="container-fluid">
+        <div class="slider-area">
+            <!-- Mobile Device Show Menu-->
+            <div class="header-right2 d-flex align-items-center">
+                <!-- Social -->
+                <div class="header-social  d-block d-md-none">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                </div>
+                <!-- Search Box -->
+                <div class="search d-block d-md-none">
+                    <ul class="d-flex align-items-center">
+                        <li class="mr-15">
+                            <div class="nav-search search-switch">
+                                <i class="ti-search"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="card-stor">
+                                <img src="/assets/img/gallery/card.svg" alt="">
+                                <span>0</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
+            <!-- /End mobile  Menu-->
         </div>
     </div>
-    <!-- breadcrumb End-->
-    <!--?  Details start -->
-    <div class="directory-details pt-padding">
+    <!-- End Hero -->
+    <!--    <img src="../../../resources/static/assets/img/gallery/about1.png"/>-->
+    <!--? New Arrival Start -->
+    <div class="new-arrival">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="small-tittle mb-20">
-                        <h2>Description</h2>
-                    </div>
-                    <div class="directory-cap mb-40">
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form, by injected humour, or randomised words which don't look
-                            even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be
-                            sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum
-                            generators on the Internet tend to repeat predefined chunks as necessary, making this the
-                            first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined
-                            with a handful of model sentence structures, to generate Lorem Ipsum which looks
-                            reasonable.</p>
-                    </div>
-                    <div class="small-tittle mb-20">
-                        <h2>Description</h2>
-                    </div>
-                    <div class="gallery-img">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <img th:src="@{'/assets/img/gallery/'+ ${productDetail.productPhoto}}" class="mb-30"
-                                     alt="">
-                            </div>
-                            <div class="small-tittle mb-20">
-                                <h2>Product's name:</h2>
-                                <h3 th:text="${productDetail.productName}"></h3>
-                                <h2>Product price:</h2>
-                                <h3 th:text="'$'+ ${productDetail.productPrice}"></h3>
-                                <a th:href="@{/cart/add/__${productDetail.productId}__}"><button class="submit-btn2" type="button" >Add cart</button></a>
-                            </div>
+            <!-- Section tittle -->
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-10">
+                    <div class="section-tittle mb-60 text-center wow fadeInUp" data-wow-duration="2s"
+                         data-wow-delay=".2s">
 
-                        </div>
-                    </div>
-                </div>
+                        <h2>world<br>Fashion</h2>
 
-                <div class="col-lg-4">
-
-                    <div class="form-wrapper pt-80">
-                        <div class="row ">
-                            <div class="col-xl-12">
-                                <div class="small-tittle mb-30">
-                                    <h2>Contact</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <form id="contact-form" action="#" method="POST">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-box user-icon mb-15">
-                                        <input type="text" name="name" placeholder="Your name">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-box email-icon mb-15">
-                                        <input type="text" name="email" placeholder="Email address">
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-box message-icon mb-15">
-                                        <textarea name="message" id="message" placeholder="Comment"></textarea>
-                                    </div>
-                                    <div class="submit-info">
-                                        <button class="submit-btn2" type="submit">Send Message</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-4 ">
+                    <!-- Job Category Listing start -->
+<!--                    <div class="category-listing mb-50">-->
+<!--                        &lt;!&ndash; single one &ndash;&gt;-->
+<!--                        <div class="single-listing">-->
+<!--                            &lt;!&ndash; Select City items start &ndash;&gt;-->
+<!--                            <div class="select-job-items2">-->
+<!--                                <select name="select2">-->
+<!--                                    <option value="">Category</option>-->
+<!--                                    <th:block th:each="category: ${categories}">-->
+<!--                                        <option th:value="${category.categoryName}">-->
+<!--                                            <a th:text="${category.categoryName}"></a>-->
+<!--                                        </option>-->
+<!--                                    </th:block>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;  Select City items End&ndash;&gt;-->
+<!--                            &lt;!&ndash; Select State items start &ndash;&gt;-->
+<!--                            <div class="select-job-items2">-->
+<!--                                <select name="select3">-->
+<!--                                    <option value="">Size</option>-->
+<!--                                    <th:block th:each="productSize: ${productSizes}">-->
+<!--                                    <option th:value="${productSize.size}"><span th:text="${productSize.size}"></span></option>-->
+<!--                                    </th:block>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;  Select State items End&ndash;&gt;-->
+<!--                            &lt;!&ndash; Select km items start &ndash;&gt;-->
+<!--                            <div class="select-job-items2">-->
+<!--                                <select name="select5">-->
+<!--                                    <option value="">Color</option>-->
+<!--                                    <th:block th:each="productColor: ${productColors}">-->
+<!--                                        <option th:value="${productColor.color}"><span th:text="${productColor.color}"></span></option>-->
+<!--                                    </th:block>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                            &lt;!&ndash;  Select km items End&ndash;&gt;-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+                    <!-- Job Category Listing End -->
+                </div>
+                <th:block th:each="product: ${products}" id="product">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-new-arrival mb-50 text-center wow fadeInUp single-popular-items"
+                             data-wow-duration="1s"
+                             data-wow-delay=".1s">
+                            <div class="popular-img">
+                                <img th:src="@{'/assets/img/gallery/'+ ${product.productPhoto}}" alt="">
+                                <div class="favorit-items">
+                                    <!-- <span class="flaticon-heart"></span> -->
+                                    <img src="/assets/img/gallery/favorit-card.png" alt="">
+                                </div>
+                            </div>
+                            <div class="popular-caption">
+                                <h3><a th:href="@{/product-details/__${product.productId}__}"
+                                       th:text="${product.productName}"></a></h3>
+                                <div class="rating mb-10">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span th:text="'$'+ ${product.productPrice}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+            <div style="color: black">
+                <a th:href="@{'/'(page=${products.number - 1})}" th:if="${products.hasPrevious()}"><span
+                        style="color: black">Previous</span></a>
+                <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
+                <a th:href="@{'/'(page=${products.number + 1})}" th:if="${products.hasNext()}"><span
+                        style="color: black">Next</span></a>
+            </div>
         </div>
     </div>
-    <!--  Details End -->
-    <!-- listing-area Area End -->
+    <!--? New Arrival End -->
+    <!--? collection -->
+    <section class="collection section-bg2 section-padding30 section-over1 ml-15 mr-15"
+             data-background="/assets/img/gallery/section_bg01.png">
+        <div class="container-fluid"></div>
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-9">
+                <div class="single-question text-center">
+                    <h2 class="wow fadeInUp" data-wow-duration="2s" data-wow-delay=".1s">collection houses our
+                        first-ever</h2>
+                    <a href="about.html" class="btn wow fadeInUp" data-wow-duration="2s" data-wow-delay=".4s">About
+                        Us</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- End collection -->
     <!--? Popular Locations Start 01-->
     <div class="popular-product pt-50">
         <div class="container-fluid">
@@ -221,15 +279,14 @@
         </div>
     </div>
     <!-- Popular Locations End -->
-
     <!--? Services Area Start -->
     <div class="categories-area section-padding40 gray-bg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-cat mb-50">
+                    <div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
                         <div class="cat-icon">
-                            <img src="//assets/img/icon/services1.svg" alt="">
+                            <img src="/assets/img/icon/services1.svg" alt="">
                         </div>
                         <div class="cat-cap">
                             <h5>Fast & Free Delivery</h5>
@@ -238,7 +295,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-cat mb-50">
+                    <div class="single-cat mb-50 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
                         <div class="cat-icon">
                             <img src="/assets/img/icon/services2.svg" alt="">
                         </div>
@@ -249,7 +306,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-cat mb-30">
+                    <div class="single-cat mb-30 wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
                         <div class="cat-icon">
                             <img src="/assets/img/icon/services3.svg" alt="">
                         </div>
@@ -260,7 +317,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-cat">
+                    <div class="single-cat wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
                         <div class="cat-icon">
                             <img src="/assets/img/icon/services4.svg" alt="">
                         </div>
@@ -275,7 +332,6 @@
     </div>
     <!--? Services Area End -->
 </main>
-
 <footer>
     <!-- Footer Start-->
     <div class="footer-area footer-padding">

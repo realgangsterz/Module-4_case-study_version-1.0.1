@@ -14,8 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ProducerController {
-    @Autowired
-    private ProductService productService;
+
     @Autowired
     private ProducerService producerService;
 
