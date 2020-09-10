@@ -1,13 +1,9 @@
 package com.codegym;
 
-import com.codegym.formatter.CategoryFormatter;
-import com.codegym.formatter.ProducerFormatter;
-import com.codegym.service.CategoryService;
-import com.codegym.service.ProducerService;
-import com.codegym.service.ProductService;
-import com.codegym.service.impl.CategoryServiceImpl;
-import com.codegym.service.impl.ProducerServiceImpl;
-import com.codegym.service.impl.ProductServiceImpl;
+import com.codegym.model.Category;
+import com.codegym.service.*;
+
+import com.codegym.service.impl.*;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -19,7 +15,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -58,6 +53,27 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    @Bean
+    public ProductService productService() {
+        return new ProductServiceImpl();
+    }
+    @Bean
+    public CategoryService CategoryService() {
+        return new CategoryServiceImpl();
+    }
+    @Bean
+    public ProductSizeService ProductSizeService() {
+        return new ProductSizeServiceImpl();
+    }
+    @Bean
+    public ProductColorService ProductColorService() {
+        return new ProductColorServiceImpl();
+    }
+    @Bean
+    public ProducerService ProducerService() {
+        return new ProducerServiceImpl();
     }
 
     //Thymeleaf Configuration
@@ -139,22 +155,5 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler( "/**" )
                 .addResourceLocations( CLASSPATH_RESOURCE_LOCATIONS );
-    }
-
-    @Bean
-    public ProducerService producerService(){
-        return new ProducerServiceImpl();
-    }
-    @Bean
-    public CategoryService categoryService(){
-        return new CategoryServiceImpl();
-    }
-    @Bean
-    public ProductService productService(){ return new ProductServiceImpl(); }
-
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addFormatter(new ProducerFormatter(applicationContext.getBean(ProducerService.class)));
-        registry.addFormatter(new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
     }
 }

@@ -8,9 +8,6 @@ import java.util.List;
 @Entity
 @Table(name = "customers")
 public class Customer {
-    private final int ADMIN_ROLE = 0;
-    private final int MODERATOR_ROLE = 1;
-    private final int CUSTOMER_ROLE = 2;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long customerId;
@@ -33,13 +30,10 @@ public class Customer {
 
     @NotEmpty
     private String address;
-    @NotEmpty
-    private int role;
-
     public Customer() {
     }
 
-    public Customer(Long customerId, @NotEmpty String firstName, @NotEmpty String lastName, @NotEmpty @Email String email, @NotEmpty String password, @NotEmpty Long phoneNumber, @NotEmpty String address, @NotEmpty int role) {
+    public Customer(Long customerId, @NotEmpty String firstName, @NotEmpty String lastName, @NotEmpty @Email String email, @NotEmpty String password, @NotEmpty Long phoneNumber, @NotEmpty String address) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,15 +41,6 @@ public class Customer {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.role = role;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
     }
 
     public Long getCustomerId() {
@@ -113,4 +98,5 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+
 }

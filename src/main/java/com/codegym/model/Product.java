@@ -14,8 +14,7 @@ public class Product {
     @NotEmpty
     private String productName;
 
-    @NotEmpty
-    private String productPrice;
+    private Double productPrice;
 
     @ManyToOne
     @JoinColumn(name = "producer_id")
@@ -30,17 +29,32 @@ public class Product {
     @NotEmpty
     private String amount;
 
-    @NotEmpty
     private Long shopping;
+
+    @NotEmpty
+    private String description;
+
+
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "color_id")
+    private ProductColor productColor;
+
+    @ManyToOne
+    @JoinColumn(name = "size_id")
+    private ProductSize productSize;
+
+
     public Product() {
     }
 
-    public Product(Long productId, @NotEmpty String productName, @NotEmpty String productPrice, Producer producer, @NotEmpty String discount, @NotEmpty String productPhoto, @NotEmpty String amount, @NotEmpty Long shopping, Category category) {
+
+
+    public Product(Long productId, @NotEmpty String productName, Double productPrice, Producer producer, @NotEmpty String discount, @NotEmpty String productPhoto, @NotEmpty String amount, Long shopping, @NotEmpty String description, Category category, ProductColor productColor, ProductSize productSize) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -49,7 +63,10 @@ public class Product {
         this.productPhoto = productPhoto;
         this.amount = amount;
         this.shopping = shopping;
+        this.description = description;
         this.category = category;
+        this.productColor = productColor;
+        this.productSize = productSize;
     }
 
     public Long getProductId() {
@@ -68,11 +85,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getProductPrice() {
+    public Double getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(Double productPrice) {
         this.productPrice = productPrice;
     }
 
@@ -122,5 +139,28 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public ProductColor getProductColor() {
+        return productColor;
+    }
+
+    public void setProductColor(ProductColor productColor) {
+        this.productColor = productColor;
+    }
+
+    public ProductSize getProductSize() {
+        return productSize;
+    }
+
+    public void setProductSize(ProductSize productSize) {
+        this.productSize = productSize;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

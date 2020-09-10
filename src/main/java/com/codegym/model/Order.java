@@ -11,7 +11,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
 
+
     @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @NotEmpty
@@ -34,7 +36,7 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public Customer getCustomer() {
+     public Customer getCustomer() {
         return customer;
     }
 
