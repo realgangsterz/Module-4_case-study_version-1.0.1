@@ -1,4 +1,4 @@
-package com.codegym.controller;
+package com.codegym.controller.home;
 
 import com.codegym.model.Category;
 import com.codegym.model.Product;

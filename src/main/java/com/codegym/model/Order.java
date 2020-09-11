@@ -2,7 +2,6 @@ package com.codegym.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -14,7 +13,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private User user;
 
     @NotEmpty
     private String orderDate;
@@ -22,9 +21,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long orderId, Customer customer, @NotEmpty String orderDate) {
+    public Order(Long orderId, User user, @NotEmpty String orderDate) {
         this.orderId = orderId;
-        this.customer = customer;
+        this.user = user;
         this.orderDate = orderDate;
     }
 
@@ -36,12 +35,12 @@ public class Order {
         this.orderId = orderId;
     }
 
-     public Customer getCustomer() {
-        return customer;
+     public User getUser() {
+        return user;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getOrderDate() {

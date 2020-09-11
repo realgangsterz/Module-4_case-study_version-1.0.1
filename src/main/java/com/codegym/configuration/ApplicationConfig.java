@@ -1,6 +1,5 @@
-package com.codegym;
+package com.codegym.configuration;
 
-import com.codegym.model.Category;
 import com.codegym.service.*;
 
 import com.codegym.service.impl.*;
@@ -53,27 +52,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
-    }
-
-    @Bean
-    public ProductService productService() {
-        return new ProductServiceImpl();
-    }
-    @Bean
-    public CategoryService CategoryService() {
-        return new CategoryServiceImpl();
-    }
-    @Bean
-    public ProductSizeService ProductSizeService() {
-        return new ProductSizeServiceImpl();
-    }
-    @Bean
-    public ProductColorService ProductColorService() {
-        return new ProductColorServiceImpl();
-    }
-    @Bean
-    public ProducerService ProducerService() {
-        return new ProducerServiceImpl();
     }
 
     //Thymeleaf Configuration
@@ -156,4 +134,27 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         registry.addResourceHandler( "/**" )
                 .addResourceLocations( CLASSPATH_RESOURCE_LOCATIONS );
     }
+
+    @Bean
+    public ProductService productService() {
+        return new ProductServiceImpl();
+    }
+    @Bean
+    public CategoryService CategoryService() {
+        return new CategoryServiceImpl();
+    }
+    @Bean
+    public ProductSizeService ProductSizeService() {
+        return new ProductSizeServiceImpl();
+    }
+    @Bean
+    public ProductColorService ProductColorService() {
+        return new ProductColorServiceImpl();
+    }
+    @Bean
+    public ProducerService ProducerService() {
+        return new ProducerServiceImpl();
+    }
+    @Bean
+    public UserService userService(){return new UserServiceImpl(); }
 }

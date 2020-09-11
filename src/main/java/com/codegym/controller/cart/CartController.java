@@ -1,4 +1,4 @@
-package com.codegym.controller;
+package com.codegym.controller.cart;
 
 import com.codegym.model.*;
 import com.codegym.service.CategoryService;
