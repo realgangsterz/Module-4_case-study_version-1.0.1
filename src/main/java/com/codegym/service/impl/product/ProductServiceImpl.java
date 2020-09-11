@@ -1,4 +1,4 @@
-package com.codegym.service.impl;
+package com.codegym.service.impl.product;
 
 import com.codegym.model.product.Category;
 import com.codegym.model.product.Product;
@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -39,9 +41,10 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> findAllByNameContaining(String name, Pageable pageable) {
         return productRepository.findAllByProductNameContaining( name, pageable );
     }
+
     @Override
     public Page<Product> findAllByCategory(Category category, Pageable pageable) {
-        return productRepository.findAllByCategory( category, pageable );
+        return productRepository.findAllByCategory(category, pageable);
     }
 
     @Override

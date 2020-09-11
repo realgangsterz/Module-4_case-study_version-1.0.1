@@ -2,7 +2,7 @@ package com.codegym.model.product;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
+
 
 @Entity
 @Table(name = "producers")

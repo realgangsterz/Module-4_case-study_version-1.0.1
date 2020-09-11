@@ -43,17 +43,12 @@ public class Product {
     @JoinColumn(name = "color_id")
     private ProductColor productColor;
 
-    @ManyToOne
-    @JoinColumn(name = "size_id")
-    private ProductSize productSize;
-
-
     public Product() {
     }
 
 
 
-    public Product(Long productId, @NotEmpty String productName, Double productPrice, Producer producer, @NotEmpty String discount, @NotEmpty String productPhoto, @NotEmpty String amount, Long shopping, @NotEmpty String description, Category category, ProductColor productColor, ProductSize productSize) {
+    public Product(Long productId, @NotEmpty String productName, Double productPrice, Producer producer, @NotEmpty String discount, @NotEmpty String productPhoto, @NotEmpty String amount, Long shopping, @NotEmpty String description, Category category, ProductColor productColor) {
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -65,7 +60,7 @@ public class Product {
         this.description = description;
         this.category = category;
         this.productColor = productColor;
-        this.productSize = productSize;
+
     }
 
     public Long getProductId() {
@@ -148,13 +143,6 @@ public class Product {
         this.productColor = productColor;
     }
 
-    public ProductSize getProductSize() {
-        return productSize;
-    }
-
-    public void setProductSize(ProductSize productSize) {
-        this.productSize = productSize;
-    }
     public String getDescription() {
         return description;
     }

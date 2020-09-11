@@ -19,7 +19,6 @@ public interface ProductService {
     Page<Product> findAllByNameContaining(String name, Pageable pageable);
 
     Page<Product> findAllByCategory(Category category, Pageable pageable);
-//    Iterable<Product>findAllByCategoryOrProductSizeOrProductColor(Optional<String> category, Optional<String> productSize, Optional<String> productColor);
 
     Page<Product> findAllByProductNameContaining(String s, Pageable pageable);
 
