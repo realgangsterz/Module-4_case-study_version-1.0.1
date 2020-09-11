@@ -1,6 +1,6 @@
 package com.codegym.service;
 
-import com.codegym.model.Producer;
+import com.codegym.model.product.Producer;
 
 public interface ProducerService {
     Iterable<Producer> findAll();
