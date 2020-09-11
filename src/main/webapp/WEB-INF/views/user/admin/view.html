@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>View User</title>
 </head>
 <body>
+<button> <a href="/admin/user">User List</a></button>
+<h1>View User: <span th:text="${user.userName}"></span></h1>
 
+<table border="1">
+    <tr>
+        <th>UserName</th>
+        <th>Password</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>age</th>
+        <th>email </th>
+        <th>phoneNumber</th>
+        <th>address</th>
+    </tr>
+    <th:block th:object="${user}">
+        <tr>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.age}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.address}"></td>
+        </tr>
+    </th:block>
+</table>
 </body>
 </html>
