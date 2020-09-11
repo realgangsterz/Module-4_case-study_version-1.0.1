@@ -1,16 +1,24 @@
 package com.codegym.service;
 
+import com.codegym.model.product.Category;
+import com.codegym.model.product.Product;
+import com.codegym.model.user.Role;
 import com.codegym.model.user.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
+    Page<User> findAll(Pageable pageable);
+
     User findById(Long id);
 
-    User findByUserName(String userName);
+    void save(User user);
 
-    Iterable<User> findAll();
+    void remove(Long id);
 
-    User save(User user);
+    Page<User> findAllByNameContaining(String name, Pageable pageable);
 
-    User remove(Long userId);
+    Page<User> findAllByRole(Role role, Pageable pageable);
+
 
 }
