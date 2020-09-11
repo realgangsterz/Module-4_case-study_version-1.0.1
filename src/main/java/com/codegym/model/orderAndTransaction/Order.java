@@ -1,4 +1,6 @@
-package com.codegym.model;
+package com.codegym.model.orderAndTransaction;
+
+import com.codegym.model.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

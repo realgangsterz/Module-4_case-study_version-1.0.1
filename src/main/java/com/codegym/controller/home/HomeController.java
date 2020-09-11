@@ -1,9 +1,9 @@
 package com.codegym.controller.home;
 
-import com.codegym.model.Category;
-import com.codegym.model.Product;
-import com.codegym.model.ProductColor;
-import com.codegym.model.ProductSize;
+import com.codegym.model.product.Category;
+import com.codegym.model.product.Product;
+import com.codegym.model.product.ProductColor;
+import com.codegym.model.product.ProductSize;
 import com.codegym.service.CategoryService;
 import com.codegym.service.ProductColorService;
 import com.codegym.service.ProductService;

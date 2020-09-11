@@ -1,6 +1,8 @@
 package com.codegym.controller.cart;
 
-import com.codegym.model.*;
+import com.codegym.model.cart.Cart;
+import com.codegym.model.product.Category;
+import com.codegym.model.product.Product;
 import com.codegym.service.CategoryService;
 import com.codegym.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

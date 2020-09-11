@@ -3,6 +3,12 @@ package com.codegym.configuration;
 import com.codegym.service.*;
 
 import com.codegym.service.impl.*;
+import com.codegym.service.impl.CategoryServiceImpl;
+import com.codegym.service.impl.ProducerServiceImpl;
+import com.codegym.service.impl.ProductColorServiceImpl;
+import com.codegym.service.impl.ProductServiceImpl;
+import com.codegym.service.impl.ProductSizeServiceImpl;
+import com.codegym.service.impl.user.UserServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -19,6 +25,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -157,4 +164,5 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     }
     @Bean
     public UserService userService(){return new UserServiceImpl(); }
+
 }

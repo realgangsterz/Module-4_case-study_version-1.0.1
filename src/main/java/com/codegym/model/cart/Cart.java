@@ -1,4 +1,6 @@
-package com.codegym.model;
+package com.codegym.model.cart;
+
+import com.codegym.model.product.Product;
 
 public class Cart {
     private Product product;

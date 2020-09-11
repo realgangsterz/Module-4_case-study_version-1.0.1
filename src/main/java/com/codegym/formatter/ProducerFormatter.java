@@ -1,8 +1,6 @@
 package com.codegym.formatter;
 
-import com.codegym.model.Category;
-import com.codegym.model.Producer;
-import com.codegym.service.CategoryService;
+import com.codegym.model.product.Producer;
 import com.codegym.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;

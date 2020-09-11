@@ -1,7 +1,7 @@
 package com.codegym.service;
 
 
-import com.codegym.model.ProductColor;
+import com.codegym.model.product.ProductColor;
 
 public interface ProductColorService {
     ProductColor findById(Long id);

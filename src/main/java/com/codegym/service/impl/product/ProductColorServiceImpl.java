@@ -1,6 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.model.ProductColor;
+import com.codegym.model.product.ProductColor;
 import com.codegym.repository.ProductColorRepository;
 import com.codegym.service.ProductColorService;
 import org.springframework.beans.factory.annotation.Autowired;

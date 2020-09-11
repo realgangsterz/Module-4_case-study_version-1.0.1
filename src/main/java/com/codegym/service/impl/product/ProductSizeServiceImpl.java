@@ -1,6 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.model.ProductSize;
+import com.codegym.model.product.ProductSize;
 import com.codegym.repository.ProductSizeRepository;
 import com.codegym.service.ProductSizeService;
 import org.springframework.beans.factory.annotation.Autowired;

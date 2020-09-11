@@ -1,6 +1,6 @@
 package com.codegym.service;
 
-import com.codegym.model.User;
+import com.codegym.model.user.User;
 
 public interface UserService {
     User findById(Long id);

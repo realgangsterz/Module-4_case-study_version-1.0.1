@@ -1,6 +1,6 @@
 package com.codegym.service;
 
-import com.codegym.model.Category;
+import com.codegym.model.product.Category;
 
 
 public interface CategoryService {

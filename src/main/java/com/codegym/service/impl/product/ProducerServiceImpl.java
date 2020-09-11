@@ -1,6 +1,6 @@
 package com.codegym.service.impl;
 
-import com.codegym.model.Producer;
+import com.codegym.model.product.Producer;
 import com.codegym.repository.ProducerRepository;
 import com.codegym.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;

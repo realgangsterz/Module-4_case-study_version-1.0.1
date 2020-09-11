@@ -1,10 +1,13 @@
-package com.codegym.service.impl;
+package com.codegym.service.impl.user;
 
-import com.codegym.model.User;
+import com.codegym.model.user.User;
 import com.codegym.repository.UserRepository;
 import com.codegym.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.transaction.Transactional;
+
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired

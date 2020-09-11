@@ -1,15 +1,13 @@
 package com.codegym.service.impl;
 
-import com.codegym.model.Category;
-import com.codegym.model.Product;
+import com.codegym.model.product.Category;
+import com.codegym.model.product.Product;
 import com.codegym.repository.ProductRepository;
 import com.codegym.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {

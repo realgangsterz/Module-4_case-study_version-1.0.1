@@ -1,7 +1,7 @@
 package com.codegym.service.impl;
 
 
-import com.codegym.model.Category;
+import com.codegym.model.product.Category;
 import com.codegym.repository.CategoryRepository;
 import com.codegym.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
