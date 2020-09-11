@@ -1,5 +1,8 @@
 package com.codegym.model;
 
+import com.codegym.model.product.Product;
+import com.codegym.model.product.ProductSize;
+
 import javax.persistence.*;
 @Entity
 @Table(name = "product_productsize")

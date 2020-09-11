@@ -6,8 +6,9 @@ import com.codegym.service.impl.*;
 import com.codegym.service.impl.CategoryServiceImpl;
 import com.codegym.service.impl.ProducerServiceImpl;
 import com.codegym.service.impl.ProductColorServiceImpl;
-import com.codegym.service.impl.ProductServiceImpl;
+//import com.codegym.service.impl.ProductServiceImpl;
 import com.codegym.service.impl.ProductSizeServiceImpl;
+import com.codegym.service.impl.product.ProductServiceImpl;
 import com.codegym.service.impl.user.UserServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,6 +33,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
@@ -164,5 +166,12 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     }
     @Bean
     public UserService userService(){return new UserServiceImpl(); }
+
+        // security
+    @Bean
+    public SpringSecurityDialect securityDialect(){
+        return new SpringSecurityDialect();
+    }
+
 
 }
