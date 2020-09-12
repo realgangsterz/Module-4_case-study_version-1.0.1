@@ -1,9 +1,7 @@
 package com.codegym.controller.producer;
 
-import com.codegym.model.Producer;
-import com.codegym.model.Product;
+import com.codegym.model.product.Producer;
 import com.codegym.service.ProducerService;
-import com.codegym.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +14,7 @@ import java.util.Optional;
 
 @Controller
 public class ProducerController {
-    @Autowired
-    private ProductService productService;
+
     @Autowired
     private ProducerService producerService;
 

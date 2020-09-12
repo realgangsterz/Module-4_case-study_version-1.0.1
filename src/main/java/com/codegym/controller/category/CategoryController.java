@@ -1,7 +1,7 @@
 package com.codegym.controller.category;
 
-import com.codegym.model.Category;
-import com.codegym.model.Product;
+import com.codegym.model.product.Category;
+import com.codegym.model.product.Product;
 import com.codegym.service.CategoryService;
 import com.codegym.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
