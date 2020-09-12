@@ -50,6 +50,10 @@ public class HomeController {
     public String blogDetail(){
         return "blog_details";
     }
+    @GetMapping("shop")
+    public String shop(){
+        return "shop";
+    }
 
 
 

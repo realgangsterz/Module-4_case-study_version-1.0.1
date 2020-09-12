@@ -131,6 +131,19 @@ public class ProductController {
             return modelAndView;
         }
     }
+    @PostMapping("/search-products")
+    public ModelAndView saerchProduct(@RequestParam("search") Optional<String> search,
+                                     @PageableDefault(size = 5) Pageable pageable) {
+        Page<Product> products;
+        if (search.isPresent()) {
+            products = productService.findAllByProductNameContaining(search.get(), pageable);
+        } else {
+            products = productService.findAll(pageable);
+        }
+        ModelAndView modelAndView = new ModelAndView("/product/search");
+        modelAndView.addObject("products", products);
+        return modelAndView;
+    }
 
 
 }
