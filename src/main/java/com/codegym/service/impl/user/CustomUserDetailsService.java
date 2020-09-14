@@ -1,5 +1,6 @@
 package com.codegym.service.impl.user;
 
+import com.codegym.model.user.Role;
 import com.codegym.model.user.User;
 import com.codegym.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +35,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private static Collection<? extends GrantedAuthority> getAuthorities(User user) {
-        String[] userRoles = user.getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
-        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(userRoles);
+//        String[] userRoles = user.getRoles().stream().map((role) -> role.getName()).toArray(String[]::new);
+        Role role = user.getRole() ;
+        Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(role.getName());
         return authorities;
     }
 
-    public static void main(String[] args) {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pass = encoder.encode("abc123");
-        System.out.printf(pass);
-    }
+//    public static void main(String[] args) {
+//        PasswordEncoder encoder = new BCryptPasswordEncoder();
+//        String pass = encoder.encode("abc123");
+//        System.out.printf(pass);
+//    }
 }

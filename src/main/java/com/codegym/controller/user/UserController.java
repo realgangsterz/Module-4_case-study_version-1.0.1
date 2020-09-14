@@ -5,6 +5,7 @@ import com.codegym.model.product.Category;
 import com.codegym.model.product.Product;
 import com.codegym.model.product.ProductColor;
 import com.codegym.model.product.ProductSize;
+import com.codegym.model.user.Role;
 import com.codegym.model.user.User;
 import com.codegym.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -36,6 +40,8 @@ public class UserController {
     private ProductColorService productColorService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
 //    @Autowired
 //    PasswordEncoder passwordEncoder;
@@ -50,9 +56,18 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView PostRegisterPage(@ModelAttribute(value = "user") User user){
+    public ModelAndView PostRegisterPage(@Validated @ModelAttribute(value = "user") User user, BindingResult bindingResult){
 //        String password = passwordEncoder.encode(user.getPassword());
 //        user.setPassword(password);
+
+//        user.setRoles();
+        new User().validate(user,bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            ModelAndView model = new ModelAndView("user/register");
+            model.addObject("user",user);
+            return model;
+        }
+        user.setRole(roleService.findById(2l));
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("user",user);
@@ -63,6 +78,11 @@ public class UserController {
     @GetMapping("/admin")
     public String admin(){
         return "admin";
+    }
+
+    @GetMapping("/user")
+    public String user(){
+        return "user";
     }
 
     @GetMapping("/home")
@@ -112,7 +132,9 @@ public class UserController {
     public ModelAndView showEditForm(@PathVariable Long id){
         User user = userService.findById(id);
         if(user != null) {
+            Iterable<Role> roles = roleService.findAll();
             ModelAndView modelAndView = new ModelAndView("/user/admin/edit");
+            modelAndView.addObject("roles",roles);
             modelAndView.addObject("user", user);
             return modelAndView;
 
@@ -149,7 +171,7 @@ public class UserController {
     @PostMapping("/admin/delete-user")
     public String deleteUser(@ModelAttribute("user") User user){
         userService.remove(user.getUserId());
-        return "redirect:/user/admin/list";
+        return "redirect:/admin/user";
     }
 
     @GetMapping("/admin/view-user/{id}")

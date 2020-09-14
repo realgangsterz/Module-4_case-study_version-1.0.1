@@ -37,8 +37,6 @@ public class HomeController {
     @Autowired
     private ProductColorService productColorService;
 
-
-//    Trang chủ hiện tất cả các sản phẩm
     @RequestMapping(method = RequestMethod.GET)
     public String index(@RequestParam("s") Optional<String> s, Pageable pageable, @RequestParam("page") Optional<String> page, Model model, HttpSession session) {
         Page<Product> products;
@@ -65,9 +63,8 @@ public class HomeController {
         model.addAttribute( "productSizes", productSizes );
         model.addAttribute( "productColors", productColors);
         model.addAttribute( "size", cartItems.size() );
-        return "home";
+        return "index";
     }
-//Lọc sản phẩm theo category( sẽ hiện tất cả các sản phẩm theo category được chọn)
     @GetMapping("category/{categoryId}")
     public ModelAndView viewCategory(@PathVariable("categoryId") Long id, Pageable pageable, @RequestParam("page") Optional<String> page) {
         Iterable<Category> categories = categoryService.findAll();
@@ -86,7 +83,7 @@ public class HomeController {
         modelAndView.addObject( "category", category );
         return modelAndView;
     }
-//Kích vào sản phẩm sẽ nhẩy ra trang chi tiết sản phẩm
+
     @GetMapping("/product-details/{id}")
     public String productDetails(@PathVariable("id") Long id, Model model, HttpSession session) {
         Iterable<Category> categories = categoryService.findAll();
