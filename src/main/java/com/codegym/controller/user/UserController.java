@@ -77,11 +77,6 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/admin")
-    public String admin(){
-        return "admin";
-    }
-
     private String getPrincipal(){
         String userName = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -94,7 +89,12 @@ public class UserController {
         return userName;
     }
 
-    @GetMapping("/home")
+    @GetMapping("/admin")
+    public String admin(){
+        return "admin";
+    }
+
+    @GetMapping(value = {"/home","/admin-home"})
     public String userHome(@RequestParam("s") Optional<String> s, Pageable pageable, @RequestParam("page") Optional<String> page, Model model, HttpSession session) {
         Page<Product> products;
         Iterable<Category> categories = categoryService.findAll();
@@ -122,6 +122,11 @@ public class UserController {
         model.addAttribute( "size", cartItems.size() );
         model.addAttribute("user", getPrincipal());
         return "index";
+    }
+
+    @GetMapping("/accessDenied")
+    public String deniedAccess(){
+        return "accessDenied";
     }
 
     @GetMapping("/admin/user")
