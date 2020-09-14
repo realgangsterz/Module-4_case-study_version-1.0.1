@@ -63,7 +63,7 @@ public class HomeController {
         model.addAttribute( "productSizes", productSizes );
         model.addAttribute( "productColors", productColors);
         model.addAttribute( "size", cartItems.size() );
-        return "index";
+        return "home";
     }
     @GetMapping("category/{categoryId}")
     public ModelAndView viewCategory(@PathVariable("categoryId") Long id, Pageable pageable, @RequestParam("page") Optional<String> page) {

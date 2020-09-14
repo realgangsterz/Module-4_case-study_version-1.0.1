@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,9 +82,16 @@ public class UserController {
         return "admin";
     }
 
-    @GetMapping("/user")
-    public String user(){
-        return "user";
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
     }
 
     @GetMapping("/home")
@@ -111,7 +120,8 @@ public class UserController {
         model.addAttribute( "productSizes", productSizes );
         model.addAttribute( "productColors", productColors);
         model.addAttribute( "size", cartItems.size() );
-        return "home";
+        model.addAttribute("user", getPrincipal());
+        return "index";
     }
 
     @GetMapping("/admin/user")
@@ -128,13 +138,15 @@ public class UserController {
         return modelAndView;
     }
 
+    @ModelAttribute("roles")
+    public Iterable<Role> roles(){
+      return roleService.findAll();
+    }
     @GetMapping("/admin/edit-user/{id}")
     public ModelAndView showEditForm(@PathVariable Long id){
         User user = userService.findById(id);
         if(user != null) {
-            Iterable<Role> roles = roleService.findAll();
             ModelAndView modelAndView = new ModelAndView("/user/admin/edit");
-            modelAndView.addObject("roles",roles);
             modelAndView.addObject("user", user);
             return modelAndView;
 
@@ -149,7 +161,7 @@ public class UserController {
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("/user/admin/edit");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "product updated successfully");
+        modelAndView.addObject("message", "user updated successfully");
         return modelAndView;
     }
 
