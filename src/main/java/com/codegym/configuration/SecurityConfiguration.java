@@ -2,6 +2,7 @@ package com.codegym.configuration;
 
 import com.codegym.configuration.CustomSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -50,6 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/dba/**").access("hasRole('ADMIN') and hasRole('DBA')")
                 .and().formLogin().successHandler(customSuccessHandler)
                 .usernameParameter("ssoId").passwordParameter("password")
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .and().csrf()
                 .and().exceptionHandling().accessDeniedPage("/accessDenied");
     }
