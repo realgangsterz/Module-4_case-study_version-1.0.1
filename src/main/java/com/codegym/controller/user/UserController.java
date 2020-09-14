@@ -5,6 +5,7 @@ import com.codegym.model.product.Category;
 import com.codegym.model.product.Product;
 import com.codegym.model.product.ProductColor;
 import com.codegym.model.product.ProductSize;
+import com.codegym.model.user.Role;
 import com.codegym.model.user.User;
 import com.codegym.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -36,6 +42,8 @@ public class UserController {
     private ProductColorService productColorService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
 //    @Autowired
 //    PasswordEncoder passwordEncoder;
@@ -50,9 +58,18 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView PostRegisterPage(@ModelAttribute(value = "user") User user){
+    public ModelAndView PostRegisterPage(@Validated @ModelAttribute(value = "user") User user, BindingResult bindingResult){
 //        String password = passwordEncoder.encode(user.getPassword());
 //        user.setPassword(password);
+
+//        user.setRoles();
+        new User().validate(user,bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            ModelAndView model = new ModelAndView("user/register");
+            model.addObject("user",user);
+            return model;
+        }
+        user.setRole(roleService.findById(2l));
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("user",user);
@@ -63,6 +80,18 @@ public class UserController {
     @GetMapping("/admin")
     public String admin(){
         return "admin";
+    }
+
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails)principal).getUsername();
+        } else {
+            userName = principal.toString();
+        }
+        return userName;
     }
 
     @GetMapping("/home")
@@ -91,7 +120,8 @@ public class UserController {
         model.addAttribute( "productSizes", productSizes );
         model.addAttribute( "productColors", productColors);
         model.addAttribute( "size", cartItems.size() );
-        return "home";
+        model.addAttribute("user", getPrincipal());
+        return "index";
     }
 
     @GetMapping("/admin/user")
@@ -108,6 +138,10 @@ public class UserController {
         return modelAndView;
     }
 
+    @ModelAttribute("roles")
+    public Iterable<Role> roles(){
+      return roleService.findAll();
+    }
     @GetMapping("/admin/edit-user/{id}")
     public ModelAndView showEditForm(@PathVariable Long id){
         User user = userService.findById(id);
@@ -127,7 +161,7 @@ public class UserController {
         userService.save(user);
         ModelAndView modelAndView = new ModelAndView("/user/admin/edit");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("message", "product updated successfully");
+        modelAndView.addObject("message", "user updated successfully");
         return modelAndView;
     }
 
@@ -149,7 +183,7 @@ public class UserController {
     @PostMapping("/admin/delete-user")
     public String deleteUser(@ModelAttribute("user") User user){
         userService.remove(user.getUserId());
-        return "redirect:/user/admin/list";
+        return "redirect:/admin/user";
     }
 
     @GetMapping("/admin/view-user/{id}")

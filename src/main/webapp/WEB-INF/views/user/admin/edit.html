@@ -57,6 +57,14 @@
             <td><input type="text" th:field="*{address}"/></td>
             <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name Error</td>
         </tr>
+        <td>Role:</td>
+        <td>
+            <select th:field="*{role}">
+                <option th:each="r : ${roles}"
+                        th:value="${r.getId()}"
+                        th:text="${r.getName()}"></option>
+            </select>
+        </td>
 
         <tr>
             <td></td>

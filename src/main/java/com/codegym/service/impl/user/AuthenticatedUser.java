@@ -5,10 +5,7 @@ import com.codegym.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User{
 
@@ -29,7 +26,8 @@ public class AuthenticatedUser extends org.springframework.security.core.userdet
     private static Collection<? extends GrantedAuthority> getAuthorities(User user)
     {
         Set<String> roleAndPermissions = new HashSet<>();
-        List<Role> roles = user.getRoles();
+        List<Role> roles = new ArrayList<>();
+        roles.add(user.getRole());
 
         for (Role role : roles)
         {

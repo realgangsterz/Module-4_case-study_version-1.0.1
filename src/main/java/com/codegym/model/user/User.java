@@ -1,5 +1,6 @@
 package com.codegym.model.user;
 
+import com.codegym.model.product.Producer;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -56,14 +57,15 @@ public class User implements Validator {
     @NotBlank
     private String address;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL) @JoinTable( name = "users_roles", joinColumns = @JoinColumn( name = "user_userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn( name = "role_id", referencedColumnName = "id"))
-    private List<Role> roles;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
 
     public User() {
     }
 
-    public User(Long userId, @NotEmpty @NotBlank String userName, @NotEmpty @NotBlank @Size(min = 5, max = 20) String password, @NotEmpty @NotBlank String firstName, @NotEmpty @NotBlank String lastName, @Min(18) @NotEmpty @NotBlank int age, @NotEmpty @NotBlank @Email(message = "{errors.invalid_email}") String email, @NotEmpty @NotBlank String phoneNumber, @NotEmpty @NotBlank String address, List<Role> roles) {
+    public User(Long userId, @NotEmpty @NotBlank String userName, @NotEmpty @NotBlank @Size(min = 5, max = 20) String password, @NotEmpty @NotBlank String firstName, @NotEmpty @NotBlank String lastName, @Min(18) @NotEmpty @NotBlank int age, @NotEmpty @NotBlank @Email(message = "{errors.invalid_email}") String email, @NotEmpty @NotBlank String phoneNumber, @NotEmpty @NotBlank String address, Role role) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -73,7 +75,7 @@ public class User implements Validator {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.roles = roles;
+        this.role = role;
     }
 
     public Long getUserId() {
@@ -148,12 +150,12 @@ public class User implements Validator {
         this.address = address;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

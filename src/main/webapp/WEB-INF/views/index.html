@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <html class="no-js" lang="en">
 
 <head>
@@ -76,9 +76,10 @@
                     <div class="header-right1 d-flex align-items-center">
                         <!-- Social -->
                         <div class="header-social d-none d-md-block">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                            <h1> Dear <span th:text="${user}"></span></h1>
+                            <div sec:authorize="isAuthenticated()">
+                                <a th:href="@{#}">My Profile</a> | <a th:href="@{/logout}">Logout</a>
+                            </div>
                         </div>
                         <!-- Search Box -->
                         <div class="search d-none d-md-block">
