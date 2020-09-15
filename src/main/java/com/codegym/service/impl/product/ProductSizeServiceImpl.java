@@ -1,4 +1,4 @@
-package com.codegym.service.impl;
+package com.codegym.service.impl.product;
 
 import com.codegym.model.product.ProductSize;
 import com.codegym.repository.ProductSizeRepository;
@@ -17,5 +17,10 @@ public class ProductSizeServiceImpl implements ProductSizeService {
     @Override
     public Iterable<ProductSize> findAll() {
         return productSizeRepository.findAll();
+    }
+
+    @Override
+    public ProductSize findBySize(String size) {
+        return productSizeRepository.findBySize(size);
     }
 }

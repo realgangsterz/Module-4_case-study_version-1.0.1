@@ -11,6 +11,8 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
     <!-- CSS here -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/assets/css/slicknav.css">
@@ -26,10 +28,8 @@
     <link rel="stylesheet" href="/assets/css/nice-select.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 
-    <!--thời trang nam-->
 </head>
 <body class="full-wrapper">
-
 <header>
     <!-- Header Start -->
     <div class="header-area ">
@@ -46,7 +46,7 @@
                             <nav>
                                 <ul id="navigation">
                                     <li><a th:href="@{'/'}">Home</a></li>
-                                    <li><a href="shop.html">shop</a>
+                                    <li><a th:href="@{'/'}">shop</a>
                                         <ul class="submenu">
                                             <th:block th:each="categorie : ${categories}">
                                                 <li>
@@ -87,7 +87,7 @@
                                 <li>
                                     <div class="card-stor">
                                         <img src="/assets/img/gallery/card.svg" alt="">
-                                        <span><p th:text="${size}"></p></span>
+                                        <span><p style="color:white;" th:text="${size}"></p></span>
                                     </div>
                                 </li>
                             </ul>
@@ -106,6 +106,7 @@
 <!-- header end -->
 <main>
     <!--? Hero Area Start-->
+
     <div class="container-fluid">
         <div class="slider-area">
             <!-- Mobile Device Show Menu-->
@@ -127,7 +128,7 @@
                         <li>
                             <div class="card-stor">
                                 <img src="/assets/img/gallery/card.svg" alt="">
-                                <span>0</span>
+
                             </div>
                         </li>
                     </ul>
@@ -139,75 +140,83 @@
     <!-- End Hero -->
     <!--    <img src="../../../resources/static/assets/img/gallery/about1.png"/>-->
     <!--? New Arrival Start -->
-    <div class="new-arrival">
+    <div class="col-xl-12 col-lg-3 col-md-6 col-sm-6">
+        <h2 class="text-center">Gio hang cua ban</h2>
         <div class="container">
-            <!-- Section tittle -->
-            <div class="row justify-content-center">
-                <div class="col-xl-7 col-lg-8 col-md-10">
-                    <div class="section-tittle mb-60 text-center wow fadeInUp" data-wow-duration="2s"
-                         data-wow-delay=".2s">
-                        <h2 th:text="${category.categoryName}"></h2>
+            <table id="cart" class="table table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th style="width:20%">Product</th>
+                    <th style="width:10%">Size</th>
+                    <th style="width:20%">Price</th>
+                    <th style="width:8%">Quantity</th>
+                    <th style="width:22%" class="text-center">In to money</th>
+                    <th style="width:10%">Edit</th>
+                    <th style="width:10%">Delete</th>
+                </tr>
+                </thead>
+                <th:block th:each="mapItem : ${session.myCartItems}">
+                    <tbody>
+                    <tr>
+                        <td data-th="Product">
+                            <div class="row">
+                                <div class="col-sm-2 hidden-xs"><img class="img-responsive"
+                                                                     th:src="@{'/assets/img/gallery/'+ ${mapItem.value.product_productSize.product.productPhoto}}"
+                                                                     alt="Card image cap" width="100" height="115"
+                                />
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <th:block th:each="product: ${products}" id="product">
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                        <div class="single-new-arrival mb-50 text-center wow fadeInUp single-popular-items"
-                             data-wow-duration="1s"
-                             data-wow-delay=".1s">
-                            <div class="popular-img">
-                                <img th:src="@{'/assets/img/gallery/'+ ${product.productPhoto}}" alt="">
-                                <div class="favorit-items">
-                                    <!-- <span class="flaticon-heart"></span> -->
-                                    <img src="/assets/img/gallery/favorit-card.png" alt="">
+                                    <h4 class="nomargin"
+                                        th:text="${mapItem.value.product_productSize.product.productName}"></h4>
                                 </div>
                             </div>
-                            <div class="popular-caption">
-                                <h3><a th:href="@{/product-details/__${product.productId}__}" th:text="${product.productName}"></a></h3>
-                                <div class="rating mb-10">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span th:text="'$'+ ${product.productPrice}"></span>
+                        </td>
+                        <td data-th="Size" th:text="${mapItem.value.product_productSize.productSize.size}"></td>
+                        <td data-th="Price" th:text="${mapItem.value.product_productSize.product.productPrice}"></td>
+                        <form th:action="@{/cart/edit/__${mapItem.key}__}" method="post">
+                            <td data-th="Quantity"><input name="quantity" class="form-control text-center"
+                                                          th:value="${mapItem.value.quantity}"
+                                                          type="number" min="1">
+                            </td>
+                            <td data-th="Subtotal" class="text-center"
+                                th:text="${mapItem.value.product_productSize.product.productPrice * mapItem.value.quantity}"></td>
+                            <td class="actions" data-th="">
+
+                                <input type="submit" th:text="Save">
+
+                            </td>
+                        </form>
+                        <td class="actions" data-th="">
+                            <div>
+                                <form th:action="@{/cart/remove/__${mapItem.key}__}" method="get">
+                                    <input type="submit" th:text="Delete">
+                                </form>
                             </div>
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+
+                    <tr class="visible-xs">
+                        <td class="text-center"></td>
+                        </td>
+                    </tr>
                 </th:block>
-            </div>
-            <div style="color: black">
-                <a th:href="@{'/'(page=${products.number - 1})}" th:if="${products.hasPrevious()}"><span
-                        style="color: black">Previous</span></a>
-                <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
-                <a th:href="@{'/'(page=${products.number + 1})}" th:if="${products.hasNext()}"><span
-                        style="color: black">Next</span></a>
-            </div>
+                <tr>
+                    <td><a href="/" class="btn"><i class="fa fa-angle-left"></i>Continue to buy</a>
+
+                    </td>
+                    <td colspan="2" class="hidden-xs"></td>
+                    <td class="hidden-xs text-center" th:text="${session.myCartTotal}"></td>
+                    <td><a href="" class="btn">Pay <i
+                            class="fa fa-angle-right"></i></a>
+                    </td>
+                </tr>
+                </tfoot>
+
+            </table>
         </div>
     </div>
-    <!--? New Arrival End -->
-    <!--? collection -->
-    <section class="collection section-bg2 section-padding30 section-over1 ml-15 mr-15"
-             data-background="/assets/img/gallery/section_bg01.png">
-        <div class="container-fluid"></div>
-        <div class="row justify-content-center">
-            <div class="col-xl-7 col-lg-9">
-                <div class="single-question text-center">
-                    <h2 class="wow fadeInUp" data-wow-duration="2s" data-wow-delay=".1s">collection houses our
-                        first-ever</h2>
-                    <a href="about.html" class="btn wow fadeInUp" data-wow-duration="2s" data-wow-delay=".4s">About
-                        Us</a>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
-    <!-- End collection -->
-    <!--? Popular Locations Start 01-->
+
     <div class="popular-product pt-50">
         <div class="container-fluid">
             <div class="row">

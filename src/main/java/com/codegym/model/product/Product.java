@@ -47,7 +47,6 @@ public class Product {
     }
 
 
-
     public Product(Long productId, @NotEmpty String productName, Double productPrice, Producer producer, @NotEmpty String discount, @NotEmpty String productPhoto, @NotEmpty String amount, Long shopping, @NotEmpty String description, Category category, ProductColor productColor) {
         this.productId = productId;
         this.productName = productName;

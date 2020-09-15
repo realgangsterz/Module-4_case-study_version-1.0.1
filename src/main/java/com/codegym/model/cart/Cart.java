@@ -1,25 +1,25 @@
 package com.codegym.model.cart;
 
-import com.codegym.model.product.Product;
+import com.codegym.model.Product_ProductSize;
 
 public class Cart {
-    private Product product;
+    private Product_ProductSize product_productSize;
     private int quantity;
 
     public Cart() {
     }
 
-    public Cart(Product product, int quantity) {
-        this.product = product;
+    public Cart(Product_ProductSize product_productSize, int quantity) {
+        this.product_productSize = product_productSize;
         this.quantity = quantity;
     }
 
-    public Product getProduct() {
-        return product;
+    public Product_ProductSize getProduct_productSize() {
+        return product_productSize;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct_productSize(Product_ProductSize product_productSize) {
+        this.product_productSize = product_productSize;
     }
 
     public int getQuantity() {

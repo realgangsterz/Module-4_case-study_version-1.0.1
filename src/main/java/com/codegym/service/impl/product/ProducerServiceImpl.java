@@ -1,4 +1,4 @@
-package com.codegym.service.impl;
+package com.codegym.service.impl.product;
 
 import com.codegym.model.product.Producer;
 import com.codegym.repository.ProducerRepository;

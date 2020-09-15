@@ -85,10 +85,10 @@
                                 </li>
                                 <li>
                                     <a href="/cart/viewCart">
-                                    <div class="card-stor">
-                                        <img src="/assets/img/gallery/card.svg" alt="">
-                                        <span><p th:text="${size}"></p></span>
-                                    </div>
+                                        <div class="card-stor">
+                                            <img src="/assets/img/gallery/card.svg" alt="">
+                                            <span><p th:text="${size}"></p></span>
+                                        </div>
                                     </a>
                                 </li>
                             </ul>
@@ -114,7 +114,8 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
                             <li class="breadcrumb-item"><a th:href="@{'/'}">Home</a></li>
-                            <li class="breadcrumb-item"><a th:href="@{/category/__${productDetail.category.categoryId}__}">shop</a></li>
+                            <li class="breadcrumb-item"><a
+                                    th:href="@{/category/__${productDetail.category.categoryId}__}">shop</a></li>
                             <li class="breadcrumb-item"><a href="#">Product Details</a></li>
                         </ol>
                     </nav>
@@ -151,26 +152,28 @@
                                      alt="">
                             </div>
                             <div class="small-tittle mb-20">
-                                <h2>Product's name:</h2>
-                                <h3 th:text="${productDetail.productName}"></h3>
-                                <h2>Product price:</h2>
-                                <h3 th:text="'$'+ ${productDetail.productPrice}"></h3>
-                                <h2>Product color:</h2>
-                                <h3 th:text="${productDetail.productColor.color}"></h3>
-                                <h2>Producer:</h2>
-                                <h3 th:text="${productDetail.producer.producerName}"></h3>
+                                <form th:action="@{/addCart}" method="post">
+                                    <input type="hidden" name="productId" th:value="${productDetail.productId}" >
+                                    <h2>Product's name:</h2>
+                                    <h3 th:text="${productDetail.productName}"></h3>
+                                    <h2>Product price:</h2>
+                                    <h3 th:text="'$'+ ${productDetail.productPrice}"></h3>
+                                    <h2>Product color:</h2>
+                                    <h3 th:text="${productDetail.productColor.color}"></h3>
+                                    <h2>Producer:</h2>
+                                    <h3 th:text="${productDetail.producer.producerName}"></h3>
+                                    <h2>Choose a size:</h2>
 
+                                    <th:block th:each="product_productSize : ${product_productSizes}">
 
+                                        <input type="radio" name="size"
+                                               th:value="${product_productSize.productSize.size}"
+                                               th:text="${product_productSize.productSize.size}" required>
+                                    </th:block>
+                                    <input class="submit-btn2" type="submit" value="Add Cart">
+                                </form>
 
-<!--                                <th:block th:each="categorie : ${categories}">-->
-
-<!--                                    <input type="radio" name="category" th:field="*{}">-->
-
-<!--                                        <a th:href="@{/category/__${categorie.categoryId}__}"-->
-<!--                                           th:text="${categorie.categoryName}"></a></li>-->
-<!--                                </th:block>-->
-
-                                <a th:href="@{/addCart/__${productDetail.productId}__}"><button class="submit-btn2" type="button" >Add cart</button></a>
+                                <!--                                <a th:href="@{/addCart/__${productDetail.productId}__}"><button class="submit-btn2" type="button" >Add cart</button></a>-->
                             </div>
 
                         </div>
