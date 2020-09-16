@@ -76,9 +76,9 @@
                     <div class="header-right1 d-flex align-items-center">
                         <!-- Social -->
                         <div class="header-social d-none d-md-block">
-                            <h1> Dear <span th:text="${user}"></span></h1>
+                            <h1> Dear:  <span th:text="${user}"></span></h1>
                             <div sec:authorize="isAuthenticated()">
-                                <a th:href="@{#}">My Profile</a> | <a th:href="@{/logout}">Logout</a>
+                                <a th:href="@{#}">Profile</a> | <a th:href="@{/logout}">Logout</a>
                             </div>
                         </div>
                         <!-- Search Box -->

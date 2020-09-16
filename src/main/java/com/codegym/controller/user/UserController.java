@@ -8,6 +8,7 @@ import com.codegym.model.product.ProductSize;
 import com.codegym.model.user.Role;
 import com.codegym.model.user.User;
 import com.codegym.service.*;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -58,7 +59,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ModelAndView PostRegisterPage(@Validated @ModelAttribute(value = "user") User user, BindingResult bindingResult){
+    public ModelAndView PostRegisterPage(@Validated @ModelAttribute(value = "user") User user, BindingResult bindingResult,@RequestParam("s") Optional<String> s, Pageable pageable, @RequestParam("page") Optional<String> page, HttpSession session ){
 //        String password = passwordEncoder.encode(user.getPassword());
 //        user.setPassword(password);
 
@@ -71,15 +72,37 @@ public class UserController {
         }
         user.setRole(roleService.findById(2l));
         userService.save(user);
-        ModelAndView modelAndView = new ModelAndView("home");
+        ModelAndView modelAndView = new ModelAndView("user/register");
         modelAndView.addObject("user",user);
         modelAndView.addObject("message","Register Successfully !");
-        return modelAndView;
-    }
 
-    @GetMapping("/admin")
-    public String admin(){
-        return "admin";
+
+        Page<Product> products;
+        Iterable<Category> categories = categoryService.findAll();
+        Iterable<ProductSize> productSizes = productSizeService.findAll();
+        Iterable<ProductColor> productColors = productColorService.findAll();
+        HashMap<Long, Cart> cartItems = (HashMap<Long, Cart>) session.getAttribute( "myCartItems" );
+        int t = 0;
+        if (page.isPresent()) {
+            t = Integer.parseInt( page.get() );
+        }
+        pageable = new PageRequest( t, 4 );
+        if (s.isPresent()) {
+            products = productService.findAllByNameContaining( s.get(), pageable );
+        } else {
+            products = productService.findAll( pageable );
+        }
+        if (cartItems == null) {
+            cartItems = new HashMap<>();
+        }
+
+        modelAndView.addObject( "products", products );
+        modelAndView.addObject( "categories", categories );
+        modelAndView.addObject( "productSizes", productSizes );
+        modelAndView.addObject( "productColors", productColors);
+        modelAndView.addObject( "size", cartItems.size() );
+        modelAndView.addObject("user", getPrincipal());
+        return modelAndView;
     }
 
     private String getPrincipal(){
@@ -94,7 +117,12 @@ public class UserController {
         return userName;
     }
 
-    @GetMapping("/home")
+    @GetMapping("/admin")
+    public String admin(){
+        return "admin";
+    }
+
+    @GetMapping(value = {"/home","/admin-home"})
     public String userHome(@RequestParam("s") Optional<String> s, Pageable pageable, @RequestParam("page") Optional<String> page, Model model, HttpSession session) {
         Page<Product> products;
         Iterable<Category> categories = categoryService.findAll();
@@ -124,6 +152,11 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/accessDenied")
+    public String deniedAccess(){
+        return "accessDenied";
+    }
+
     @GetMapping("/admin/user")
     public ModelAndView listProducts(@RequestParam("s") Optional<String> s,
                                      @PageableDefault(size = 5) Pageable pageable) {
@@ -135,6 +168,29 @@ public class UserController {
         }
         ModelAndView modelAndView = new ModelAndView("user/admin/list");
         modelAndView.addObject("users", users);
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/admin/create")
+    public ModelAndView showCreateForm(){
+        ModelAndView modelAndView = new ModelAndView("user/admin/create");
+        modelAndView.addObject("user",new User());
+        return modelAndView;
+    }
+
+    @PostMapping("/admin/create")
+    public ModelAndView createUser(@Validated @ModelAttribute(value = "user") User user, BindingResult bindingResult){
+        new User().validate(user,bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            ModelAndView model = new ModelAndView("user/admin/create");
+            model.addObject("user",user);
+            return model;
+        }
+        user.setRole(roleService.findById(2l));
+        userService.save(user);
+        ModelAndView modelAndView = new ModelAndView("user/admin/create");
+        modelAndView.addObject("user",user);
+        modelAndView.addObject("message","Register Successfully !");
         return modelAndView;
     }
 
